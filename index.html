@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Vision Camera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-matrix">
+    <div class="overlay" id="overlay">
+        <div class="controls glass">
+            <h1>Code Vision</h1>
+            <p class="subtitle">Real-time ASCII Camera Feed</p>
+            
+            <div class="control-group">
+                <label for="themeSelect">Color Theme</label>
+                <select id="themeSelect">
+                    <option value="theme-matrix">Matrix Green</option>
+                    <option value="theme-cyber">Cyber Blue</option>
+                    <option value="theme-hacker">Hacker White</option>
+                    <option value="theme-blood">Blood Red</option>
+                    <option value="theme-amber">Terminal Amber</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="charSelect">Character Set</label>
+                <select id="charSelect">
+                    <option value="code">Code Symbols</option>
+                    <option value="binary">Binary (0/1)</option>
+                    <option value="ascii">Standard ASCII</option>
+                    <option value="blocks">Dense Blocks</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="densitySelect">Resolution (Font Size)</label>
+                <div class="slider-container">
+                    <span class="slider-label small">High</span>
+                    <input type="range" id="densitySelect" min="6" max="24" value="12">
+                    <span class="slider-label small">Low</span>
+                </div>
+            </div>
+            
+            <div id="errorMsg" class="error-msg hidden"></div>
+            
+            <button id="startBtn" class="primary-btn">Initialize Camera</button>
+            <button id="toggleUiBtn" class="secondary-btn hidden">Hide Controls</button>
+        </div>
+    </div>
+    
+    <div id="hiddenUiTrigger" class="hidden-trigger hidden">
+        <span>Show Controls</span>
+    </div>
+    
+    <video id="webcam" autoplay playsinline class="hidden"></video>
+    <canvas id="renderCanvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

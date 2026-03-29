@@ -1,0 +1,224 @@
+:root {
+    --bg-color: #050505;
+    --glass-bg: rgba(15, 15, 15, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    
+    /* Themes */
+    --matrix-color: #00ff41;
+    --cyber-color: #00f3ff;
+    --hacker-color: #ffffff;
+    --blood-color: #ff003c;
+    --amber-color: #ffb000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.theme-matrix { --active-color: var(--matrix-color); }
+.theme-cyber { --active-color: var(--cyber-color); }
+.theme-hacker { --active-color: var(--hacker-color); }
+.theme-blood { --active-color: var(--blood-color); }
+.theme-amber { --active-color: var(--amber-color); }
+
+.hidden {
+    display: none !important;
+}
+
+#webcam {
+    display: none;
+}
+
+#renderCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Mirror the canvas so moving your hand left moves the rendering left */
+    transform: scaleX(-1);
+}
+
+.overlay {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Let clicks pass through empty areas */
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px inset rgba(255, 255, 255, 0.05);
+    pointer-events: auto; /* Re-enable clicks for the panel */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.glass.fade-out {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--active-color);
+    text-shadow: 0 0 10px rgba(var(--active-color), 0.3);
+    transition: color 0.3s ease;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s ease;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: var(--active-color);
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.small {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+input[type="range"] {
+    flex-grow: 1;
+    accent-color: var(--active-color);
+    cursor: pointer;
+}
+
+.primary-btn, .secondary-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.primary-btn {
+    background-color: var(--active-color);
+    color: black;
+    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.primary-btn:hover {
+    filter: brightness(1.2);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.error-msg {
+    color: var(--blood-color);
+    background: rgba(255, 0, 60, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 0, 60, 0.3);
+}
+
+.hidden-trigger {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    opacity: 0.5;
+}
+
+.hidden-trigger:hover {
+    opacity: 1;
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
